@@ -4,6 +4,10 @@ const express = require("express");
 require("dotenv").config();
 const characterRouter = require("./api/characters/character.router");
 const { connectMongo } = require("./utils/db");
+const {
+  notFoundHandler,
+  errorHandler,
+} = require("./api/middleware/error.middleware");
 
 // 2. CONFIGURACION
 
@@ -33,6 +37,9 @@ app.get("/", (req, res) => {
 app.use("/characters", characterRouter);
 
 // 4. MANEJO EXCEPCIONES / ERRORES
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 // 5. ACTIVAR
 
